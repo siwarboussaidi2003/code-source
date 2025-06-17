@@ -1,0 +1,26 @@
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.action-button {
+  background-color: #E8F5E9;
+  color: black;
+  border: none;
+  padding: 1.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.5;
+  white-space: pre-line;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #D1E7DD;
+}

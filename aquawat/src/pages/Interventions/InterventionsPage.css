@@ -1,0 +1,90 @@
+.intervention-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.header {
+    background-color: white;
+    padding: 1rem;
+}
+
+.logo {
+    height: 40px;
+}
+
+.content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 30px;
+    margin-left: -270px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #4ade80;
+    width: fit-content;
+    text-align: left;
+    position: relative;
+    display: block;
+}
+
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Rest of the CSS remains exactly the same */
+.intervention-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.intervention-table th,
+.intervention-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.intervention-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.intervention-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status.nouveau {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status.en_cours {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status.termine {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status.annule {
+    background-color: #ffebee;
+    color: #c62828;
+}

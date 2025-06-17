@@ -1,0 +1,140 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.container {
+  display: flex;
+  padding: 40px;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.formSection {
+  width: 450px;
+}
+
+.formSection h2 {
+  font-size: 32px;
+  margin-bottom: 32px;
+  font-weight: 500;
+  color: #000;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.nameFields {
+  display: flex;
+  gap: 1  px;
+}
+
+.nameFields input {
+  width: 50%;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #E5E7EB;
+  border-radius: 50px;
+  font-size: 16px;
+  color: #6B7280;
+  outline: none;
+}
+
+input::placeholder {
+  color: #9CA3AF;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  background-color: #a3d26e;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.loginText {
+  text-align: center;
+  font-size: 14px;
+  color: #6B7280;
+  margin-top: 12px;
+}
+
+.loginText a {
+  color: #a3d26e;
+  text-decoration: none;
+}
+
+.imageSection {
+  flex: 1;
+  MAX-width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.heroImage {
+  width: 650px;
+  height: 400px;
+  object-fit: cover;
+}
+
+
+.inputError {
+  border: 2px solid red !important;
+}
+
+.valid {
+  border: 2px solid #22c55e;
+}
+
+.invalid {
+  border: 2px solid #ef4444;
+}
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+
+/*eyeicon*/
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  flex: 1;
+  padding-right: 40px; /* espace pour l'icône */
+}
+
+.eyeIconButton {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.eyeIcon {
+  fill: #999;
+}

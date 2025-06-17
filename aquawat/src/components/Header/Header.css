@@ -1,0 +1,84 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.company-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #000;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.welcome-text {
+  font-size: 1rem;
+  color: #000;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #333;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.back-button:hover {
+  color: #666;
+}
+
+.Adminbutton {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #000;
+  background-color: transparent;
+  border: 1px solid #a3d26e;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 90px;
+  text-align: center;
+}
+.Adminbutton:hover {
+  background-color: rgba(163, 210, 110, 0.1);
+}
+
+.Apropos{
+  padding: 8px 2px;
+  font-size: 14px;
+  color: #000;
+  background-color: transparent;
+  border: 1px solid #a3d26e;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 90px;
+  text-align: center;}
+
+.Apropos:hover {
+  background-color: rgba(163, 210, 110, 0.1);
+}

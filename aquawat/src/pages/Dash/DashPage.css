@@ -1,0 +1,24 @@
+.main-content {
+  flex: 1;
+  margin-left: 5px;
+  padding: 2rem;
+  min-height: 100vh;
+  min-width: 290vh;
+
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  color: #111827;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  margin-left: 20rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1.5rem;
+    margin-left: 20rem;
+
+}

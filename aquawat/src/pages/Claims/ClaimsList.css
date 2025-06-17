@@ -1,0 +1,113 @@
+
+
+  .content-wrapper {
+    max-width: 1300px;
+    margin-left: 29rem;
+
+  }
+
+
+
+  
+  h1 {
+  font-size: 2rem;
+  color: #111827;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  margin-right: 10rem;
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background-color: #f9fafb;
+  }
+
+  th {
+    text-align: center;
+    padding: 0.75rem 1rem;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    color: #111827;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .action-cell {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .accept-btn {
+    background-color: #22C55E;
+    color: white;
+    border: none;
+    padding: 0.375rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    min-width: 85px;
+  }
+
+  .reject-btn {
+    background-color: #FF6B6B;
+    color: white;
+    border: none;
+    padding: 0.375rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    min-width: 85px;
+  }
+
+  .etat-cell {
+    color: #22C55E;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  th:nth-child(5),
+  th:nth-child(6) {
+    text-align: center;
+  }
+
+  /* Ensure full width layout */
+  body,
+  #root {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    width: 100%;
+  }
+
+  .truncated-text {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
