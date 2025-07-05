@@ -58,3 +58,36 @@ AquaWatt est une application web complète de gestion des contrats d’énergie,
 ```bash
 git clone https://github.com/votre-nom/aquawatt.git
 cd aquawatt
+
+Backend (Spring Boot)
+cd backend
+./mvnw spring-boot:run
+
+Frontend (React)
+cd frontend
+npm install
+npm start
+
+🔐 Variables d’environnement
+Backend (application.properties)
+spring.datasource.url=jdbc:mysql://localhost:3306/aquawatt_db
+spring.datasource.username=root
+spring.datasource.password=...
+jwt.secret=secret-key
+spring.mail.username=votre.email@gmail.com
+spring.mail.password=motdepasse
+
+Frontend (.env)
+REACT_APP_API_URL=http://localhost:8080/api
+
+📂 Structure du projet
+swift
+Copy
+Edit
+aquawatt/
+├── backend/
+│   ├── src/main/java/com/example/aquawatt/
+│   └── resources/application.properties
+├── frontend/
+│   ├── src/
+│   └── public/
