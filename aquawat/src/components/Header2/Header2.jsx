@@ -20,7 +20,7 @@ const Header2 = () => {
         <span className="company-name">AquaWatt</span>
       </div>
       
-      <span className="welcome-text">Bienvenue {userName || 'Foulen'}</span>
+      <span className="welcome-text">Bienvenue</span>
 
       <div className="header-right">
         <button className="disconnect-btn" onClick={handleLogout}>

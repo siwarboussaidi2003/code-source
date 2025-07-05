@@ -19,15 +19,17 @@ const InvoicesPage = () => {
       const userId = 1;
       const [unpaidResponse, paidResponse] = await Promise.all([
         fetch(`http://localhost:8080/api/factures/user/${userId}/en-attente`, {
+          method: 'GET',
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Accept': 'application/json'
           }
-        }),
+        }), 
         fetch(`http://localhost:8080/api/factures/user/${userId}/payees`, {
+          method: 'GET',
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Accept': 'application/json'
           }
         })
       ]);

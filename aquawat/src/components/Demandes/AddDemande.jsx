@@ -6,8 +6,7 @@ const AddDemande = ({ onClose, onSuccess }) => {
     reference: '',
     typeContrat: '',
     typeDemande: '',
-    commentaire: '',
-    photo: null
+    commentaire: ''
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,9 +39,6 @@ const AddDemande = ({ onClose, onSuccess }) => {
     formDataToSend.append('userId', 1); // Adapter si dynamique
     formDataToSend.append('dateCreation', new Date().toISOString()); // Optionnel
 
-    if (formData.photo) {
-      formDataToSend.append('photo', formData.photo);
-    }
 
     try {
       const response = await fetch('http://localhost:8080/api/demandes', {
@@ -141,15 +137,6 @@ const AddDemande = ({ onClose, onSuccess }) => {
               onChange={(e) => setFormData({ ...formData, commentaire: e.target.value })}
               rows="4"
               placeholder="Décrivez votre demande..."
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Photo</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFormData({ ...formData, photo: e.target.files[0] })}
             />
           </div>
 

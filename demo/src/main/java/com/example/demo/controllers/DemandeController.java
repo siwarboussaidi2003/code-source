@@ -1,14 +1,19 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Demande;
+import com.example.demo.entities.User;
 import com.example.demo.repositories.DemandeRepository;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.DemandeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -24,6 +29,9 @@ public class DemandeController {
 
     @Autowired
     private DemandeRepository demandeRepository;
+    @Autowired
+    private UserRepository userRepository;
+
 
     @GetMapping
     public ResponseEntity<?> getAllDemandes() {
@@ -54,18 +62,38 @@ public class DemandeController {
 
     @PostMapping
     public ResponseEntity<?> createDemande(
-            @RequestPart("demande") Demande demande,
-            @RequestPart(value = "photo", required = false) MultipartFile photo) {
+            @RequestParam("reference") String reference,
+            @RequestParam("typeContrat") String typeContrat,
+            @RequestParam("typeDemande") String typeDemande,
+            @RequestParam(value = "commentaire", required = false) String commentaire,
+            @RequestParam("etatFinale") String etatFinale,
+            @RequestParam("userId") Long userId,
+            @RequestParam("dateCreation") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateCreation
+    ) {
         try {
             logger.info("Creating new demande");
-            Demande savedDemande = demandeService.save(demande, photo);
+
+            Demande demande = new Demande();
+            demande.setReference(reference);
+            demande.setTypeContrat(typeContrat);
+            demande.setTypeDemande(typeDemande);
+            demande.setCommentaire(commentaire);
+            demande.setEtatFinale(etatFinale);
+            demande.setDateCreation(dateCreation);
+
+            // Charger l'utilisateur depuis l'ID (recommandé si vous avez une relation @ManyToOne)
+            // User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+            // demande.setUserId(userId);
+
+            Demande savedDemande = demandeService.save(demande);
             return ResponseEntity.ok(savedDemande);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error creating demande", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error creating demande: " + e.getMessage());
+                    .body("Erreur lors de la création de la demande : " + e.getMessage());
         }
     }
+
 
     @PutMapping("/{id}/status")
     public ResponseEntity<?> updateDemandeStatus(

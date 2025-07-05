@@ -26,7 +26,8 @@ const PaymentPage = () => {
       const response = await fetch(`http://localhost:8080/api/factures/${selectedInvoice.id}/payer`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
           nomCarte: paymentData.cardName,

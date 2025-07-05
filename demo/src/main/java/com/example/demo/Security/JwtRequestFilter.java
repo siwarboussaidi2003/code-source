@@ -56,26 +56,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
             try {
                 email = jwtUtil.extractEmail(jwt);
+                List<String> roles = new ArrayList<>(jwtUtil.extractRoles(jwt));
+                List<GrantedAuthority> authorities = roles.stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+                User user = userRepository.findByEmail(email).orElse(null);
+                if (user != null && jwtUtil.validateToken(jwt, user.getEmail())) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    logger.warn("invalid authHeader ");
+                }
             } catch (ExpiredJwtException e) {
-                System.out.println("Token expiré");
+               // System.out.println("Token expiré");
             } catch (Exception e) {
-                System.out.println("Erreur de parsing du token");
+               // System.out.println("Erreur de parsing du token");
             }
-        }
-
-        List<String> roles = new ArrayList<>(jwtUtil.extractRoles(jwt));
-        List<GrantedAuthority> authorities = roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-
-        User user = userRepository.findByEmail(email).orElse(null);
-        if (user != null && jwtUtil.validateToken(jwt, user.getEmail())) {
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(user.getEmail(), null, authorities);
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        } else {
-            logger.warn("invalid authHeader ");
         }
 
         chain.doFilter(request, response);

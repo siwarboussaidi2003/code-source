@@ -28,9 +28,6 @@ public class Demande {
     @Column(columnDefinition = "TEXT")
     private String commentaire;
 
-    @Column(name = "photo_path")
-    private String photoPath;
-
     @Column(name = "etatFinale", length = 20)
     private String etatFinale = "Attente";
 

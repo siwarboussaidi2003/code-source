@@ -10,7 +10,13 @@ const DemandesPage = () => {
 
   const fetchDemandes = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/demandes');
+      const response = await fetch('http://localhost:8080/api/demandes', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Accept': 'application/json'
+        }
+      });
       if (!response.ok) throw new Error('Failed to fetch demandes');
       const data = await response.json();
       setDemandes(data);
@@ -45,7 +51,6 @@ const DemandesPage = () => {
                 <th>Type de contrat</th>
                 <th>Type de demande</th>
                 <th>Date de création</th>
-                <th>Photos du problème</th>
                 <th>État administrative</th>
               </tr>
             </thead>
@@ -57,15 +62,8 @@ const DemandesPage = () => {
                   <td>{demande.typeDemande}</td>
                   <td>{new Date(demande.dateCreation).toLocaleDateString()}</td>
                   <td>
-                    {demande.photoPath && (
-                      <a href="#" className="photo-link">
-                        Voir la photo
-                      </a>
-                    )}
-                  </td>
-                  <td>
-                    <span className={`status-badge ${demande.etatAdministrative.toLowerCase()}`}>
-                      {demande.etatAdministrative}
+                    <span className={`status-badge ${(demande.etatFinale|| '').toLowerCase()}`}>
+                      {demande.etatFinale}
                     </span>
                   </td>
                 </tr>

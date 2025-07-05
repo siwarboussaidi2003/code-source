@@ -101,7 +101,7 @@ const Sinscrire = () => {
     });
 
     if (Object.keys(validationErrors).length === 0) {
-      fetch('http://localhost:8080/api/auth/register', { // ou /api/auth/register selon ton backend
+      fetch('http://localhost:8080/api/auth/register', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -116,7 +116,6 @@ const Sinscrire = () => {
             }
             console.log('Inscription réussie:', data);
           } catch (err) {
-            // Pas un JSON ? alors c'est sûrement un texte brut de succès
             if (response.ok) {
               console.log('Inscription réussie (texte brut):', text);
             } else {

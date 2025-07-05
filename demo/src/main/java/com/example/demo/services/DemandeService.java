@@ -4,7 +4,7 @@ import com.example.demo.entities.Demande;
 import com.example.demo.repositories.DemandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +19,6 @@ import java.util.logging.Level;
 @Service
 public class DemandeService {
     private static final Logger logger = Logger.getLogger(DemandeService.class.getName());
-    private final Path uploadPath = Paths.get("uploads");
 
     @Autowired
     private DemandeRepository demandeRepository;
@@ -27,16 +26,6 @@ public class DemandeService {
     @Autowired
     private InterventionService interventionService;
 
-    public DemandeService() {
-        try {
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to create upload directory", e);
-            throw new RuntimeException("Could not create upload directory!", e);
-        }
-    }
 
     public List<Demande> findAll() {
         try {
@@ -56,7 +45,7 @@ public class DemandeService {
         }
     }
 
-    public Demande save(Demande demande, MultipartFile photo) throws IOException {
+    public Demande save(Demande demande) throws IOException {
         try {
             // Set creation date if not set
             if (demande.getDateCreation() == null) {
@@ -67,14 +56,6 @@ public class DemandeService {
             if (demande.getEtatFinale() == null) {
                 demande.setEtatFinale("Attente");
             }
-
-            // Handle photo upload
-            if (photo != null && !photo.isEmpty()) {
-                String fileName = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
-                Files.copy(photo.getInputStream(), uploadPath.resolve(fileName));
-                demande.setPhotoPath(fileName);
-            }
-
             Demande savedDemande = demandeRepository.save(demande);
 
             // Create intervention record

@@ -14,13 +14,12 @@ const DashPage = () => {
             try {
                 const response = await axios.get("http://localhost:8080/api/dashboard", {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Accept': 'application/json'
                     }
                 });
-
                 const dashboardData = response.data;
                 const statsData = [
-
                     {
                         title: "Utilisateurs Totales",
                         value: dashboardData.userCount,
@@ -50,11 +49,9 @@ const DashPage = () => {
         };
 
         fetchDashboardData();
-
         const intervalId = setInterval(fetchDashboardData, 5000);
         return () => clearInterval(intervalId);
     }, []);
-
 
     if (loading) {
         return <div>Loading dashboard data...</div>;

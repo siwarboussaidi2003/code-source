@@ -50,6 +50,9 @@ const LoginAdmin = () => {
 
         const text = await response.text();
         console.log("Texte brut du serveur :", text); // Debug
+         console.log("Connexion réussie :", JSON.parse(text).token);
+            localStorage.setItem("token", JSON.parse(text).token);
+            //navigate("/admin/dashboard");
 
         try {
           const data = JSON.parse(text);
@@ -66,9 +69,10 @@ const LoginAdmin = () => {
               setErrors({ general: "Accès refusé : vous n’êtes pas administrateur." });
               return;
             }
+            console.log('token ', data)
 
-            console.log("Connexion réussie :", data);
-            localStorage.setItem("token", data.token);
+            console.log("Connexion réussie :", text.token);
+            localStorage.setItem("token", text.token);
             navigate("/admin/dashboard");
           }
         } catch (err) {

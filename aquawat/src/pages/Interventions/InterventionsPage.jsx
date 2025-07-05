@@ -12,7 +12,13 @@ const InterventionList = () => {
         const fetchInterventions = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('http://localhost:8080/api/interventions');
+                const response = await fetch('http://localhost:8080/api/interventions', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Accept': 'application/json'
+                    }
+                });
                 if (!response.ok) {
                     throw new Error('Failed to fetch interventions');
                 }

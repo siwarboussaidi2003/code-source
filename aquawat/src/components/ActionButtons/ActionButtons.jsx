@@ -29,7 +29,7 @@ const ActionButtons = () => {
         className="action-button"
         onClick={() => navigate('/interventions')}
       >
-        Intervention
+        Historique
       </button>
     </div>
   );

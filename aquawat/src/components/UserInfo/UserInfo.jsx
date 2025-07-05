@@ -6,9 +6,9 @@ const UserInfo = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userInfo, setUserInfo] = useState({
-    nom: 'Chaouachi Emna',
-    reference: '12345678',
-    localisation: 'Tunis, Les Berges du Lac'
+    nom: '',
+    reference: '',
+    localisation: ''
   });
 
   useEffect(() => {
@@ -30,10 +30,6 @@ const UserInfo = () => {
         Liste des contrats
       </button>
       <div className="info-card">
-        <div className="info-row">
-          <span className="info-label">Nom et Prénom</span>
-          <span className="info-value">{userInfo.nom}</span>
-        </div>
         <div className="info-row">
           <span className="info-label">Référence</span>
           <span className="info-value">{userInfo.reference}</span>

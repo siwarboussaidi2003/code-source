@@ -70,6 +70,11 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
     try {
       validateForm();
 
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Utilisateur non authentifié. Veuillez vous reconnecter.');
+      }
+
       const paymentData = {
         nomCarte: formData.nomCarte,
         numeroCarte: formData.numeroCarte.replace(/\s/g, ''),
@@ -82,14 +87,22 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
       const response = await fetch(`http://localhost:8080/api/factures/${invoice.id}/payer`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json' // Ajout indispensable
         },
         body: JSON.stringify(paymentData)
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erreur lors du paiement');
+        let errorMessage = 'Erreur lors du paiement';
+        try {
+          const errorData = await response.json();
+          if (errorData.message) errorMessage = errorData.message;
+        } catch (e) {
+          // réponse non JSON, on garde message générique
+        }
+        throw new Error(errorMessage);
       }
 
       await onPaymentComplete();
@@ -108,17 +121,16 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
         <div className="payment-form">
           <h2>Paiement de facture</h2>
           <div className="invoice-details">
-           
             <p className="amount">Montant: {invoice.montant} DT</p>
           </div>
-          
+
           {error && <div className="error-message">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Nom sur la carte *</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={formData.nomCarte}
                 onChange={handleCardName}
                 placeholder="CHAOUACHI EMNA"
@@ -130,8 +142,8 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
 
             <div className="form-group">
               <label>Numéro de carte *</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={formData.numeroCarte}
                 onChange={handleCardNumber}
                 placeholder="2222 2222 2222 2222"
@@ -144,8 +156,8 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
             <div className="two-columns">
               <div className="form-group">
                 <label>Date d'expiration *</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={formData.dateExpiration}
                   onChange={handleExpiryDate}
                   placeholder="MM/YY"
@@ -156,7 +168,7 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
               </div>
               <div className="form-group">
                 <label>Code de sécurité *</label>
-                <input 
+                <input
                   type="password"
                   value={formData.codeSecurite}
                   onChange={handleSecurityCode}
@@ -169,17 +181,17 @@ const PaymentForm = ({ invoice, onClose, onPaymentComplete }) => {
             </div>
 
             <div className="button-group">
-              <button 
-                type="button" 
-                className="cancel-button" 
+              <button
+                type="button"
+                className="cancel-button"
                 onClick={onClose}
                 disabled={isSubmitting}
               >
                 Annuler
               </button>
-              <button 
-                type="submit" 
-                className="submit-button" 
+              <button
+                type="submit"
+                className="submit-button"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Traitement...' : 'Payer maintenant'}

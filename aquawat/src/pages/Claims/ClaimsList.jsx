@@ -8,12 +8,19 @@ const ClaimsList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const API_BASE_URL = 'http://localhost:8080/api/reclamations'; // Adjust the endpoint if needed
+    const API_BASE_URL = 'http://localhost:8080/api/reclamations';
+    const token = localStorage.getItem("token");
+
+    // Définir les headers une seule fois
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json'
+    };
 
     useEffect(() => {
         const fetchReclamations = async () => {
             try {
-                const response = await axios.get(API_BASE_URL);
+                const response = await axios.get(API_BASE_URL, { headers });
                 setReclamations(response.data);
                 setLoading(false);
             } catch (error) {
@@ -25,38 +32,27 @@ const ClaimsList = () => {
         fetchReclamations();
     }, []);
 
-const handleAccepter = async (id) => {
-    try {
-        const token = localStorage.getItem("token");
-        await axios.post(`${API_BASE_URL}/${id}/accepter`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        const updatedReclamations = await axios.get(API_BASE_URL);
-        setReclamations(updatedReclamations.data);
-    } catch (error) {
-        console.error('Error accepting reclamation:', error);
-        setError(error);
-    }
-};
+    const handleAccepter = async (id) => {
+        try {
+            await axios.post(`${API_BASE_URL}/${id}/accepter`, {}, { headers });
+            const updatedReclamations = await axios.get(API_BASE_URL, { headers });
+            setReclamations(updatedReclamations.data);
+        } catch (error) {
+            console.error('Error accepting reclamation:', error);
+            setError(error);
+        }
+    };
 
-const handleRefuser = async (id) => {
-    try {
-        const token = localStorage.getItem("token");
-        await axios.post(`${API_BASE_URL}/${id}/refuser`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        const updatedReclamations = await axios.get(API_BASE_URL);
-        setReclamations(updatedReclamations.data);
-    } catch (error) {
-        console.error('Error refusing reclamation:', error);
-        setError(error);
-    }
-};
-
+    const handleRefuser = async (id) => {
+        try {
+            await axios.post(`${API_BASE_URL}/${id}/refuser`, {}, { headers });
+            const updatedReclamations = await axios.get(API_BASE_URL, { headers });
+            setReclamations(updatedReclamations.data);
+        } catch (error) {
+            console.error('Error refusing reclamation:', error);
+            setError(error);
+        }
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -72,11 +68,10 @@ const handleRefuser = async (id) => {
             <div className="main-content">
                 <div className="content-wrapper">
                     <h1>Liste des réclamations</h1>
-                    <div className="table-container">
+                    <div className="table-containner">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Nom et Prénom</th>
                                     <th>Référence</th>
                                     <th>Type de réclamation</th>
                                     <th>Date de Création</th>
@@ -88,11 +83,10 @@ const handleRefuser = async (id) => {
                             <tbody>
                                 {reclamations.map((reclamation) => (
                                     <tr key={reclamation.id}>
-                                        <td>{reclamation.nomEtPrenom}</td>
                                         <td>{reclamation.reference}</td>
                                         <td>{reclamation.typeReclamation}</td>
                                         <td>{reclamation.dateCreation}</td>
-                                        <td  className='truncated-text'>{reclamation.commentaire}</td>
+                                        <td className='truncated-text'>{reclamation.commentaire}</td>
                                         <td className="action-cell">
                                             {reclamation.etatFinale === null ? (
                                                 <>

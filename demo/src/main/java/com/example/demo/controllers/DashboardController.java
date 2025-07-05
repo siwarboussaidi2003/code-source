@@ -4,37 +4,46 @@ import com.example.demo.repositories.DemandeRepository;
 import com.example.demo.repositories.ReclamationRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/dashboard")
-@CrossOrigin(origins = "http://localhost:5173") // Allow requests from your React app
+@RequestMapping("/api/dashboard")
+@CrossOrigin(origins = "http://localhost:5173") // Autorise les requêtes depuis React
 public class DashboardController {
 
     @Autowired
-    private UserRepository userRepository; // Assuming you have a UserRepository
+    private UserRepository userRepository;
+
     @Autowired
-    private DemandeRepository demandeRepository; // Assuming you have a DemandeRepository
+    private DemandeRepository demandeRepository;
+
     @Autowired
-    private ReclamationRepository reclamationRepository; // Assuming you have a ReclamationRepository
+    private ReclamationRepository reclamationRepository;
 
-    @GetMapping // Corrected: Remove "/dashboard"
-    public Map<String, Long> getDashboardData() {
-        long userCount = userRepository.count();
-        long demandeCount = demandeRepository.countByEtatFinaleIsNull(); // Count pending demandes
-        long reclamationCount = reclamationRepository.countByEtatFinaleIsNull(); // Count pending reclamations
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public Map<String, Object> getDashboardData() {
+        Map<String, Object> response = new HashMap<>();
 
-        Map<String, Long> data = new HashMap<>();
-        data.put("userCount", userCount);
-        data.put("demandeCount", demandeCount);
-        data.put("reclamationCount", reclamationCount);
+        try {
+            long userCount = userRepository.count();
+            long demandeCount = demandeRepository.countByEtatFinaleIsNull();      // demandes en attente
+            long reclamationCount = reclamationRepository.countByEtatFinaleIsNull(); // réclamations en attente
 
-        return data;
+            response.put("userCount", userCount);
+            response.put("demandeCount", demandeCount);
+            response.put("reclamationCount", reclamationCount);
+
+
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "Erreur lors du chargement des données du dashboard.");
+        }
+
+        return response;
     }
 }
