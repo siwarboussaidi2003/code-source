@@ -1,4 +1,4 @@
-# 🌊 AquaWatt - Plateforme de Gestion de Contrats Énergétiques
+# 🌊 AquaWatt - Plateforme de Gestion de Services d'énergie
 
 AquaWatt est un Portail web Full-Stack de gestion des services d’énergie (Eau potable et Electricité), permettant aux utilisateurs de s'inscrire, de naviguer à des contrats, avec des rôles administrateur et client.
 
